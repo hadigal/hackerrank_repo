@@ -1,2 +1,3 @@
 This repo contains challenges solved on:
-- https://www.hackerrank.com/
+- [hackerrank](https://www.hackerrank.com/)
+- [leetcode](https://leetcode.com/problemset/all/)
