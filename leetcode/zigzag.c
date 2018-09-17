@@ -10,7 +10,6 @@ static char *convert(char *str, int numRows)
   {
     return str;
   }
-  //retStr = (char *)calloc(len+1,sizeof(*retStr));
   char **zzStr = (char **)calloc(numRows,sizeof(*zzStr));
   int defFlag = 0,cFlag = 0;
   int row=0,col=0;
@@ -55,7 +54,6 @@ static char *convert(char *str, int numRows)
         {
           rowLen[0] = col;
         }
-        //++row;
       }
     }
     ++itr;
@@ -65,7 +63,6 @@ static char *convert(char *str, int numRows)
   unsigned int rLen;
   while(itr1 < numRows)
   {
-    //rLen = strlen(zzStr[itr]);
     itr2 = 0;
     while(itr2 <= rowLen[itr1])
     {
