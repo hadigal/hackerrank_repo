@@ -5,61 +5,62 @@
 
 void adjustArr(int *arr, int len)
 {
-    int itr = 1;
+    int itr = 0;
+
     int tempOut  = arr[0];
     int newLen  = len -1;
     while(itr < newLen)
     {
         int temp = arr[itr+1];
-        arr[itr] = tempOut;
+        arr[itr+1] = tempOut;
         tempOut = temp;
+        ++itr;
     }
 }
 
-void addNewArrIdx(int *newArr, int digitSize, int itr, int *returnSize)
+int *addNewArrIdx(int *newArr, int digitsSize, int itr, int *returnSize)
 {
-    newArr = (int *)realloc(newArr,(digitSize+1)*sizeof(*newArr));
-    adjustArr(newArr,(digitSize+1));
+    int sizeArr = digitsSize + 1;
+    newArr = (int *)realloc(newArr,(sizeArr)*sizeof(int));
+    adjustArr(newArr,(digitsSize+1));
     newArr[itr+1] = 1;
-    *returnSize = *returnSize + 1;
+    *returnSize = (*returnSize) + 1;
+    return newArr;
 }
 
 int* plusOne(int* digits, int digitsSize, int* returnSize)
 {
     int *newArr = (int *)calloc(digitsSize,sizeof(*newArr));
-    int itr = digitSize -1;
+    int itr = digitsSize -1;
     int lastDig = digits[itr];
-    *returnSize = digitSize;
+    *returnSize = digitsSize;
 
     while(itr >= 0)
     {
         if(lastDig == 9 && itr == (digitsSize -1))
         {
             newArr[itr--] = 0;
-            newArr[itr] = 1;
             if(itr < 0)
             {
-                // newArr = (int *)realloc(newArr,(digitSize+1)*sizeof(*newArr));
-                // adjustArr(newArr,(digitSize+1));
-                // newArr[itr+1] = 1;
-                // *returnSize = *returnSize + 1;
-                addNewArrIdx(newArr,digitSize, itr, returnSize);
+                newArr = addNewArrIdx(newArr,digitsSize, itr, returnSize);
                 continue;
             }
+            newArr[itr] = 1;
+            continue;
+        }
+        else if(lastDig != 9 && itr == (digitsSize -1))
+        {
+            newArr[itr--] = lastDig + 1;
             continue;
         }
 
-        if((newArr[itr]+arr[itr]) >= 10)
+        if((newArr[itr]+digits[itr]) >= 10)
         {
-            int temp = (newArr[itr]+arr[itr])%10;
+            int temp = (newArr[itr]+digits[itr])%10;
             newArr[itr--] = temp;
             if(itr < 0)
             {
-                // newArr = (int *)realloc(newArr,(digitSize+1)*sizeof(*newArr));
-                // adjustArr(newArr,(digitSize+1));
-                // newArr[itr+1] = 1;
-                // *returnSize = *returnSize + 1;
-                addNewArrIdx(newArr,digitSize, itr, returnSize);
+                newArr = addNewArrIdx(newArr,digitsSize, itr, returnSize);
                 continue;
             }
             newArr[itr] = 1;
@@ -67,7 +68,7 @@ int* plusOne(int* digits, int digitsSize, int* returnSize)
         }
         else
         {
-            newArr[itr] = arr[itr];
+            newArr[itr] += digits[itr];
             --itr;
             continue;
         }
